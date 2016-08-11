@@ -32,11 +32,13 @@ var record_database = function(
         transaction_hash, transaction_index, event_name, description
 ){
 
-    connection.query(
-        'INSERT INTO contract_event ' +
+    var query = 'INSERT INTO contract_event ' +
         '(`block_id`, `msg_sender`, `msg_value`, `contract_address`, `block_hash`, `log_index`, `transaction_hash`, `transaction_index`, `event_name`, `description`, `datetime`)' +
-        'VALUES (?,?,?,?,?, ?,?,?,?,?, now()); ',
-        [block_id, msg_sender, msg_value, contract_address, block_hash, log_index, transaction_hash, transaction_index, event_name, description]
+        'VALUES (?,?,?,?,?, ?,?,?,?,?, now()); ';
+
+    connection.query(
+        query,
+        [block_id, msg_sender, web3.toBigNumber(msg_value).toNumber(), contract_address, block_hash, log_index, transaction_hash, transaction_index, event_name, description]
     , function(err, rows, fields) {
         if (err) throw err;
     });
@@ -357,7 +359,7 @@ var watchEvents = function(contract){
             });
 
             record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
-                            result.transactionHash, result.transactionIndex, result.event + " - " + result.args.eventType, result.args.msg);
+                            result.transactionHash, result.transactionIndex, result.event + " - " + result.args.eventType, result.args.message);
         }
     });
 
@@ -388,6 +390,7 @@ app.get('/logs', function(req, res){
     // order by the latest event
     query = (query + " ORDER BY `contract_event`.`datetime` DESC;");
     console.log(query)
+    console.log("contract = " + contract);
 
 
     // connection.connect();
