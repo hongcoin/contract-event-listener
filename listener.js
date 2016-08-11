@@ -102,7 +102,7 @@ var watchEvents = function(contract){
                 if(err) {return console.log(err);}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -123,7 +123,7 @@ var watchEvents = function(contract){
                 if(err) {return console.log(err);}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -144,7 +144,7 @@ var watchEvents = function(contract){
                 if(err) {return console.log(err);}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -165,7 +165,7 @@ var watchEvents = function(contract){
                 if(err) {return console.log(err);}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -186,7 +186,7 @@ var watchEvents = function(contract){
                 if(err) {return console.log(err);}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -207,7 +207,7 @@ var watchEvents = function(contract){
                 if(err) {return console.log(err);}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -228,7 +228,7 @@ var watchEvents = function(contract){
                 if(err) {return console.log(err);}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -249,7 +249,7 @@ var watchEvents = function(contract){
                 if(err) {}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -270,7 +270,7 @@ var watchEvents = function(contract){
                 if(err) {}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -291,7 +291,7 @@ var watchEvents = function(contract){
                 if(err) {}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -312,7 +312,7 @@ var watchEvents = function(contract){
                 if(err) {}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
@@ -333,14 +333,14 @@ var watchEvents = function(contract){
                 if(err) {}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event, description);
         }
     });
 
     eventRecord = contract.evRecord({}, function(error, result) {
         if (!error) {
-            var description = "eventType: " + result.args.eventType + ", msg: " + result.args.msg + "";
+            var description = "eventType: " + result.args.eventType + ", message: " + result.args.message + "";
             var msg = "["+ result.blockNumber +"] evRecord -- " + description;
             msg += "\n    - address: " + result.address + "";
             msg += "\n    - blockHash: " + result.blockHash + "";
@@ -356,7 +356,7 @@ var watchEvents = function(contract){
                 if(err) {}
             });
 
-            record_database(result.blockNumber, "", "", result.address, result.blockHash, result.logIndex,
+            record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
                             result.transactionHash, result.transactionIndex, result.event + " - " + result.args.eventType, result.args.msg);
         }
     });
