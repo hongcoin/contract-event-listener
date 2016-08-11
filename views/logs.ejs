@@ -33,6 +33,7 @@ body{
     margin: 4px 0;
     background-color: #f4f4f4;
 }
+
 </style>
 
 </head>
@@ -70,12 +71,12 @@ body{
                 for(var i = 0;i < data.length;i++) { %>
                 <div class="block_data">
                     <div class="blockData_blockId" title="<%=data[i].id%>">
-                        # <%=data[i].block_id%><br/>
                         <div class="blockData_datetime">Synchronized at <%=data[i].datetime_string%></div>
+                        # <%=data[i].block_id%>
                     </div>
                     <div class="info">
                         Event: <div class="blockData_eventName"><%=data[i].event_name%></div><br/>
-                        Description: <div class="blockData_description"><%=data[i].description%></div><br/>
+                        <span class="eventDescLabel">Description:</span> <div class="blockData_description"><%=data[i].description%></div><br/>
                     </div>
 
                     <% if(data[i].msg_sender != ""){ %>
