@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project HONG - Watch a deployed contract</title>
+
+<link href='https://fonts.googleapis.com/css?family=Roboto+Mono' rel='stylesheet' type='text/css'>
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+
+<style type="text/css">
+
+body{
+    text-align: center;
+}
+label{text-align: left;}
+.testnet_notice{color:#ff0000;}
+
+textarea{width:100%;}
+textarea#source_code{
+    height: 300px;
+    margin-top: 4px;
+}
+.result_compile{padding:10px 0;}
+.pick_class_name,
+.abiDefinition{display: none;}
+
+.view_log{
+    position: fixed;z-index: 2;top:6px;right:6px;display: inline-block;vertical-align: top;
+    padding: 8px 16px; border: 1px solid #dadada; background-color: #f7f7fa;
+}
+</style>
+
+</head>
+<body>
+
+<a href="/logs" target="_blank"><div class="view_log">View Logs</div></a>
+
+<div class="row">
+    <div class="col s12">
+
+        <div>
+            <h4>Watch a HONG Contract <span class="testnet_notice">[TESTNET]</span></h4>
+        </div>
+
+
+
+        <div class="input-field ">
+            <textarea id="source_code" placeholder="Source Code" class="validate"></textarea>
+            <label for="source_code">Contract Source code</label>
+        </div>
+        <div class="input-field ">
+            <a class="waves-effect waves-light btn compile_code_button">Compile source code</a>
+        </div>
+
+        <div class="result_compile"></div>
+
+        <div class="pick_class_name">
+            <div>
+                <h5>Fill in contract address</h5>
+            </div>
+
+            <div class="input-field ">
+                <input placeholder="Contract Address (0xADDRESS...)" id="contract_address" type="text" class="validate">
+                <label for="contract_address">Contract Address</label>
+            </div>
+
+            <div>
+                <h5>Pick the contract deployed</h5>
+            </div>
+
+            <div class=" col s12">
+                <select id="contract_select">
+                    <option value="" disabled selected>Choose a deployed contract</option>
+                </select>
+            </div>
+
+            <div class=" abiDefinition">
+                <textarea id="abiDefinition" readonly class="validate" style="height:120px;"></textarea>
+            </div>
+
+            <div class="">
+                <a class="waves-effect waves-light btn submit_button">Submit and listen</a>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+var json_compiled;
+
+$(".submit_button").click(function(){
+
+    $.ajax({
+        type: "POST",
+        url: "/updateContract",
+        data: {
+            "address": $("#contract_address").val(),
+            "abiDefinition": $("#abiDefinition").val()
+        },
+        dataType: "json"
+    }).done(function( data ) {
+        if(data.status == "success"){
+            // updated
+            alert("The listener is updated successfully.");
+        }
+    });
+});
+
+$(".compile_code_button").click(function(){
+
+    if($("#source_code").val() == ""){
+        alert("Please enter the source code");
+        return;
+    }
+
+    $("#source_code").attr("disabled", "disabled");
+    $("#abiDefinition").val("");
+
+    $.ajax({
+        type: "POST",
+        url: "/compile/solidity",
+        data: {
+            "source_string": $("#source_code").val()
+        },
+        dataType: "json"
+    }).done(function( data ) {
+        var html = "";
+        console.log(data);
+        $("#source_code").removeAttr("disabled");
+
+        if(data.hasOwnProperty("status") && data.hasOwnProperty("details")){
+            for(var key in data){
+                if(key == "details"){
+                    html += "<b>details</b>: <textarea readonly class='solidity_code_display'>" + data[key] + "</textarea><br/>";
+
+                }else{
+                    html += "<b>" + key + "</b>: " + data[key] + "<br/>";
+                }
+            }
+            $(".result_compile").html(html);
+
+        }else{
+
+            json_compiled = data;
+            $("#contract_select").html("<option value='' disabled selected>Choose a deployed contract</option>").show();
+            $(".pick_class_name").show();
+
+            for(var key in data){
+                // contract_select
+
+                console.log(key);
+                $("#contract_select").append("<option value='" + key + "'>" + key + "</option>");
+
+            }
+        }
+
+    }).fail(function( jqXHR, textStatus ) {
+        console.log(jqXHR.responseText);
+        var msg = $.parseJSON(jqXHR.responseText).details;
+        alert( "Request failed: \n" + msg );
+    });
+});
+
+$("#contract_select").on("change", function(){
+    //
+    $(".abiDefinition").show();
+
+    var $val = $(this).val();
+
+    $("#abiDefinition").val(JSON.stringify(json_compiled[$val].info.abiDefinition));
+
+});
+
+</script>
+
+</body>
+</html>

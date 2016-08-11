@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project HONG - Watch a deployed contract</title>
+
+<link href='https://fonts.googleapis.com/css?family=Roboto+Mono' rel='stylesheet' type='text/css'>
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+
+<style type="text/css">
+
+body{
+    text-align: center;
+}
+.container label{text-align: left;display: block;}
+.testnet_notice{color:#ff0000;}
+
+.block_data{border-bottom: 1px solid #ddd;text-align: left;color:#444;padding:6px;position: relative;}
+.block_data:nth-child(even){background-color: #f9f9f9;}
+.block_data .info{display: block;}
+.block_data .info > div{display: inline-block;vertical-align: top;}
+.block_data .blockData_eventName{font-weight: bold;color:#000;}
+.block_data .blockData_blockId{position: absolute;top:6px;right:6px;z-index: 2;color:#777;text-align: right;}
+.block_data .moreInfo{
+    border:1px solid #a8a8a8;padding: 4px 10px;font-family: monospace;font-size: 0.9em;
+    border-radius: 4px;
+    margin: 4px 0;
+    background-color: #f4f4f4;
+}
+</style>
+
+</head>
+<body>
+
+<div class="row">
+    <div class="col s12">
+
+        <div>
+            <h4>HONG Contract Logs</h4>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col s8"><form method="GET" id="query_contract">
+                    <label>Contract Address</label>
+                    <input type="text" name="contract" placeholder="0x..." value="<%=contract%>" />
+                </form></div>
+
+                <div class="input-field col s4">
+                    <a class="waves-effect waves-light btn submit_contract_filter">Filter by Contract Address</a>
+                </div>
+            </div>
+        </div>
+
+        <div>Ordered by the latest event</div>
+
+
+        <div class="contract_logs">
+
+
+            <% if(typeof data != "undefined"){
+            if(data.length){
+                for(var i = 0;i < data.length;i++) { %>
+                <div class="block_data">
+                    <div class="blockData_blockId" title="<%=data[i].id%>">
+                        # <%=data[i].block_id%><br/>
+                        <div class="blockData_datetime">Synchronized at <%=data[i].datetime_string%></div>
+                    </div>
+                    <div class="info">
+                        Event: <div class="blockData_eventName"><%=data[i].event_name%></div><br/>
+                        Description: <div class="blockData_description"><%=data[i].description%></div><br/>
+
+                    </div>
+                    <div class="info">
+                        <span>msg.sender: </span><div class="blockData_msgSender"><%=data[i].msg_sender%></div>
+                        (<span>msg.value: </span><div class="blockData_msgValue"><%=data[i].msg_value%> Wei, x/10^18 Ether</div>)
+                    </div>
+                    <div class="moreInfo">
+                        <div class="blockData_contractAddress">contract address: <%=data[i].contract_address%></div>
+                        <div class="blockData_blockHash">blockHash: <%=data[i].block_hash%></div>
+                        <div class="blockData_logIndex">logIndex: <%=data[i].log_index%></div>
+                        <div class="blockData_transactionHash">transactionHash: <%=data[i].transaction_hash%></div>
+                    </div>
+                </div>
+
+                <% }
+
+                }else{ %>
+                    <div>No record</div>
+                <% }
+            }else{
+            %>
+                <div>Connection error</div>
+            <% } %>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+$(".submit_contract_filter").click(function(){
+    $("form#query_contract").submit();
+});
+</script>
+
+</body>
+</html>

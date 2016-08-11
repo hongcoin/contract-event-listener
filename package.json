@@ -1,0 +1,21 @@
+{
+  "name": "hong-contract-event-listener",
+  "version": "1.0.0",
+  "description": "Backend for HONG Contract Event Listener",
+  "main": "listener.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "dateformat": "^1.0.12",
+    "ejs": "^2.5.1",
+    "express": "^4.14.0",
+    "mysql": "^2.11.1",
+    "web3": "^0.17.0-alpha"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node listener.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
