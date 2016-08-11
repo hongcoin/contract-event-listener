@@ -32,16 +32,15 @@ var record_database = function(
         transaction_hash, transaction_index, event_name, description
 ){
 
-    connection.connect();
-
     connection.query(
         'INSERT INTO contract_event ' +
         '(`block_id`, `msg_sender`, `msg_value`, `contract_address`, `block_hash`, `log_index`, `transaction_hash`, `transaction_index`, `event_name`, `description`, `datetime`)' +
-        'VALUES (?,?,?,?,?, ?,?,?,?,?, now()); ', [block_id, msg_sender, msg_value, contract_address, block_hash, log_index, transaction_hash, transaction_index, event_name, description], function(err, rows, fields) {
-      if (err) throw err;
+        'VALUES (?,?,?,?,?, ?,?,?,?,?, now()); ',
+        [block_id, msg_sender, msg_value, contract_address, block_hash, log_index, transaction_hash, transaction_index, event_name, description]
+    , function(err, rows, fields) {
+        if (err) throw err;
     });
 
-    connection.end();
 }
 
 
