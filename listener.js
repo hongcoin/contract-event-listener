@@ -35,11 +35,6 @@ var record_database = function(
     var query = 'INSERT INTO contract_event ' +
         '(`block_id`, `msg_sender`, `msg_value`, `contract_address`, `block_hash`, `log_index`, `transaction_hash`, `transaction_index`, `event_name`, `description`, `datetime`)' +
         'VALUES (?,?,?,?,?, ?,?,?,?,?, now()); ';
-    console.log(query);
-    console.log(block_id);
-    console.log(msg_sender);
-    console.log(msg_value);
-    console.log(web3.toBigNumber(msg_value).toNumber());
 
     connection.query(
         query,
@@ -364,7 +359,7 @@ var watchEvents = function(contract){
             });
 
             record_database(result.blockNumber, result.args.msg_sender, result.args.msg_value, result.address, result.blockHash, result.logIndex,
-                            result.transactionHash, result.transactionIndex, result.event + " - " + result.args.eventType, result.args.msg);
+                            result.transactionHash, result.transactionIndex, result.event + " - " + result.args.eventType, result.args.message);
         }
     });
 
