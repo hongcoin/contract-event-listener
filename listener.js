@@ -36,6 +36,9 @@ var record_database = function(
         '(`block_id`, `msg_sender`, `msg_value`, `contract_address`, `block_hash`, `log_index`, `transaction_hash`, `transaction_index`, `event_name`, `description`, `datetime`)' +
         'VALUES (?,?,?,?,?, ?,?,?,?,?, now()); ';
     console.log(query);
+    console.log(block_id);
+    console.log(msg_sender);
+    console.log(msg_value);
 
     connection.query(
         query,
