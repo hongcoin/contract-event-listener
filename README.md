@@ -1,6 +1,10 @@
 NodeJS Backend for HONG Contract Event listener
 ================
 
+## Live Version
+
+http://107.178.211.223:5000/logs
+
 
 
 ## Software requirement
@@ -18,4 +22,15 @@ NodeJS Backend for HONG Contract Event listener
 
 
 
+## Run the server
+
+1. Deploy a contract with Mist.
+
+2. Type `nodejs listener.js` to start server. The server will be up at http://localhost:5000. Paste your contract source code at http://localhost:5000, then pick the contract name deployed.
+
+3. Paste the contract address in the form.
+
+4. Submit the form. Contract events will be watched.
+
+5. View logs from http://localhost:5000/logs.
 
