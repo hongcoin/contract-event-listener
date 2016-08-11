@@ -39,10 +39,11 @@ var record_database = function(
     console.log(block_id);
     console.log(msg_sender);
     console.log(msg_value);
+    console.log(web3.toBigNumber(msg_value).toNumber());
 
     connection.query(
         query,
-        [block_id, msg_sender, msg_value, contract_address, block_hash, log_index, transaction_hash, transaction_index, event_name, description]
+        [block_id, msg_sender, web3.toBigNumber(msg_value).toNumber(), contract_address, block_hash, log_index, transaction_hash, transaction_index, event_name, description]
     , function(err, rows, fields) {
         if (err) throw err;
     });
