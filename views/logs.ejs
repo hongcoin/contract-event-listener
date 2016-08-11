@@ -35,6 +35,12 @@ body{
     background-color: #f4f4f4;
 }
 
+.watching_address{margin-bottom: 8px;}
+.watching_address span{display: inline-block;padding:4px 8px;border-radius: 4px;}
+.status_success{background-color: #eeffee;color:#060;}
+.status_warning{background-color: #ffeeee;color:#a00;}
+
+.order_by{font-style: italic;color: #999;}
 </style>
 
 </head>
@@ -61,7 +67,8 @@ body{
             </div>
         </div>
 
-        <div>Ordered by the latest event</div>
+        <div class="watching_address"></div>
+        <div class="order_by">Ordered by the latest event</div>
 
 
         <div class="contract_logs">
@@ -113,9 +120,25 @@ body{
 
 
 <script type="text/javascript">
-$(".submit_contract_filter").click(function(){
-    $("form#query_contract").submit();
+
+$(document).ready(function(){
+    $.ajax({
+        type: "GET",
+        url: "/api/currentAddress"
+    }).done(function( data ) {
+        if(data.hasOwnProperty("address")){
+            $(".watching_address").html("<span class='status_success'>Currently watching: contract " + data.address + "</span>");
+        } else {
+            $(".watching_address").html("<span class='status_warning'>The watcher is not watching any contract now. <a href='./'>Setup now</a></span>");
+        }
+    });
+
+    $(".submit_contract_filter").click(function(){
+        $("form#query_contract").submit();
+    });
+
 });
+
 </script>
 
 </body>
