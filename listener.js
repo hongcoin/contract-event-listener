@@ -390,6 +390,7 @@ app.get('/logs', function(req, res){
     // order by the latest event
     query = (query + " ORDER BY `contract_event`.`datetime` DESC;");
     console.log(query)
+    console.log("contract = " + contract);
 
 
     // connection.connect();
