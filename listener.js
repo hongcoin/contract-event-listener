@@ -92,7 +92,7 @@ var watchEvents = function(contract){
 
     eventIssueManagementFee = contract.evIssueManagementFee({}, function(error, result) {
         if (!error) {
-            var description = "Address: " + result.args.to + " purchased " + result.args.amount + " tokens. ";
+            var description = "issue management fee of " + result.args._amount + " wei. Result: " + result.args._success;
             var msg = "["+ result.blockNumber +"] evIssueManagementFee -- " + description;
             msg += "\n    - address: " + result.address + "";
             msg += "\n    - blockHash: " + result.blockHash + "";
@@ -155,7 +155,7 @@ var watchEvents = function(contract){
 
     eventMgmtInvestProject = contract.evMgmtInvestProject({}, function(error, result) {
         if (!error) {
-            var description = "Project wallet: " + result.args._projectWallet + ", amount: " + result.args._amount + ", result: " + result.args.result + ". ";
+            var description = "Invest to project wallet: " + result.args._projectWallet + ", amount: " + result.args._amount + ", result: " + result.args.result + ". ";
             var msg = "["+ result.blockNumber +"] evMgmtInvestProject -- " + description;
             msg += "\n    - address: " + result.address + "";
             msg += "\n    - blockHash: " + result.blockHash + "";
@@ -176,7 +176,7 @@ var watchEvents = function(contract){
 
     eventLockFund = contract.evLockFund({}, function(error, result) {
         if (!error) {
-            var description = "Project wallet: " + result.args._projectWallet + ", amount: " + result.args._amount + ", result: " + result.args.result + ". ";
+            var description = "Lock fund";
             var msg = "["+ result.blockNumber +"] evLockFund -- " + description;
             msg += "\n    - address: " + result.address + "";
             msg += "\n    - blockHash: " + result.blockHash + "";
@@ -218,7 +218,7 @@ var watchEvents = function(contract){
 
     eventMinTokensReached = contract.evMinTokensReached({}, function(error, result) {
         if (!error) {
-            var description = "value: " + result.args.value + " ";
+            var description = "Tokens created: " + result.args.value + " ";
             var msg = "["+ result.blockNumber +"] evMinTokensReached -- " + description;
             msg += "\n    - address: " + result.address + "";
             msg += "\n    - blockHash: " + result.blockHash + "";
