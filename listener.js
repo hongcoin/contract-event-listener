@@ -12,9 +12,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 
 var options = require('./options');
+var favicon = require('serve-favicon');
 
 var MyContract;
 var myContractInstance;
+var myContractInstanceAddress;
 
 
 var mysql      = require('mysql');
@@ -374,6 +376,14 @@ app.get('/', function(req, res){
     res.end(html);
 });
 
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
+
+app.get('/api/currentAddress', function(req, res){
+    console.log('GET /api/currentAddress');
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify({"status": "success", "message": "", "address": myContractInstanceAddress}));
+});
+
 app.get('/logs', function(req, res){
     console.log('GET /logs')
     contract = req.query.contract;
@@ -434,6 +444,7 @@ app.post('/updateContract', function(req, res){
 
     MyContract = web3.eth.contract(JSON.parse(abiDefinition));
     myContractInstance = MyContract.at(address);
+    myContractInstanceAddress = address;
 
     watchEvents(myContractInstance);
 

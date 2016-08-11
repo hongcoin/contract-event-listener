@@ -9,6 +9,7 @@
     "ejs": "^2.5.1",
     "express": "^4.14.0",
     "mysql": "^2.11.1",
+    "serve-favicon": "^2.3.0",
     "web3": "^0.17.0-alpha"
   },
   "devDependencies": {},
