@@ -5,7 +5,7 @@ NodeJS Backend for HONG Contract Event listener
 
 The source code is running here: http://107.178.211.223:5000/logs
 
-
+![Screenshot](screenshots/logs.png)
 
 ## Software requirement
 
@@ -25,8 +25,10 @@ The source code is running here: http://107.178.211.223:5000/logs
 
 1. Deploy a contract with Mist Testnet.
 
-2. Type `nodejs listener.js` to start server. The server will be up at http://localhost:5000. Then paste your contract source code in the form. After compiling, paste the contract address and pick the contract name deployed in the form.
+2. Start server with `nodejs listener.js`. The server will be up at http://localhost:5000. Then paste your contract source code in the form. After compiling, paste the contract address and pick the contract name deployed in the form.
 
 3. Submit the form. Contract events will be watched.
 
 4. View logs from http://localhost:5000/logs.
+
+Note: The script can watch one contract at one time. Only the last contract will be watched after re-configuration.

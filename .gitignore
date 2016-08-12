@@ -1,4 +1,10 @@
 
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# NodeJS Modules
 node_modules/
 
+# App specific configuration
 config.json
