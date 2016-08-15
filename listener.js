@@ -410,7 +410,7 @@ app.get('/logs', function(req, res){
             console.log("Error Selecting : %s ",err );
 
         for(var _i in rows){
-            rows[_i].datetime_string = dateFormat(rows[_i].datetime, "hh:MM:ss TT") + " UTC";
+            rows[_i].datetime_string = dateFormat(rows[_i].datetime, "mmm dd yyyy, hh:MM:ss TT") + " UTC";
             rows[_i].msg_value_wei = Number(rows[_i].msg_value);
             rows[_i].msg_value_ether = rows[_i].msg_value_wei / Math.pow(10, 18);
         }
