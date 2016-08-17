@@ -20,7 +20,7 @@ var myContractInstanceAddress;
 
 
 var mysql      = require('mysql');
-var connection = mysql.createConnection({
+var pool = mysql.createPool({
     host    : options.storageConfig.host,
     user    : options.storageConfig.user,
     password: options.storageConfig.password,
@@ -38,7 +38,7 @@ var record_database = function(
         '(`block_id`, `msg_sender`, `msg_value`, `contract_address`, `block_hash`, `log_index`, `transaction_hash`, `transaction_index`, `event_name`, `description`, `datetime`)' +
         'VALUES (?,?,?,?,?, ?,?,?,?,?, now()); ';
 
-    connection.query(
+    pool.query(
         query,
         [block_id, msg_sender, web3.toBigNumber(msg_value).toNumber(), contract_address, block_hash, log_index, transaction_hash, transaction_index, event_name, description]
     , function(err, rows, fields) {
@@ -403,8 +403,7 @@ app.get('/logs', function(req, res){
     console.log("contract = " + contract);
 
 
-    // connection.connect();
-    connection.query(query, [contract], function(err, rows){
+    pool.query(query, [contract], function(err, rows){
 
         if(err)
             console.log("Error Selecting : %s ",err );
@@ -420,7 +419,6 @@ app.get('/logs', function(req, res){
             contract: contract
         });
     });
-    // connection.end();
 
 });
 
